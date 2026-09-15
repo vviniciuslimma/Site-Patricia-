@@ -71,15 +71,14 @@ button {
 .site-noise {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+  object-position: center;
+
   pointer-events: none;
-
-  opacity: 0.2;
-  mix-blend-mode: screen;
-
-  image-rendering: auto;
+  z-index: 0;
 }
 
 .site-header,
@@ -698,7 +697,18 @@ main,
   </style>
 </head>
 <body>
-  <canvas class="site-noise" id="film-grain" aria-hidden="true"></canvas>
+  
+  <video
+  class="site-noise"
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  aria-hidden="true"
+>
+  <source src="assets/background.mp4" type= "Grain_Site.mp4">
+</video>
 
   <header class="site-header" data-header>
     <a class="brand" href="#top" aria-label="Ir para o topo">
@@ -802,7 +812,7 @@ main,
 
 <script>
 (() => {
-  const canvas = document.getElementById("film-grain");
+  
   const ctx = canvas.getContext("2d", {
     alpha: true
   });
@@ -813,7 +823,7 @@ main,
    * Quanto maior = grain mais fino.
    * Essa configuração se aproxima do vídeo enviado.
    */
-  const SCALE = 0.45;
+  const SCALE = 1;
 
   /*
    * Aproximadamente 12 mudanças por segundo.
@@ -826,38 +836,29 @@ main,
   let pixels;
   let lastFrame = 0;
 
-  function resize() {
-    const width = Math.max(
-      1,
-      Math.floor(window.innerWidth * SCALE)
-    );
+ function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const height = Math.max(
-      1,
-      Math.floor(window.innerHeight * SCALE)
-    );
+  canvas.width = Math.floor(window.innerWidth * dpr);
+  canvas.height = Math.floor(window.innerHeight * dpr);
 
-    canvas.width = width;
-    canvas.height = height;
+  imageData = ctx.createImageData(
+    canvas.width,
+    canvas.height
+  );
 
-    imageData = ctx.createImageData(width, height);
-    pixels = imageData.data;
-  }
+  pixels = imageData.data;
+}
 
   function drawNoise() {
     for (let i = 0; i < pixels.length; i += 4) {
+  const noise = Math.random() * 55;
 
-      /*
-       * Noise propositalmente muito sutil.
-       * Não vai de 0 até 255.
-       */
-      const noise = 20 + Math.random() * 35;
-
-      pixels[i]     = noise;
-      pixels[i + 1] = noise;
-      pixels[i + 2] = noise;
-      pixels[i + 3] = 255;
-    }
+  pixels[i]     = noise;
+  pixels[i + 1] = noise;
+  pixels[i + 2] = noise;
+  pixels[i + 3] = 255;
+}
 
     ctx.putImageData(imageData, 0, 0);
   }
