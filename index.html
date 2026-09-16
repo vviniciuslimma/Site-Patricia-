@@ -146,6 +146,12 @@ main,
   transform: translateY(0);
 }
 
+body.menu-open .floating-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
 
 .site-header {
   height: var(--header-h);
@@ -451,7 +457,7 @@ main,
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: 200;
   color: var(--text);
   background: var(--bg);
 }
@@ -950,21 +956,107 @@ main,
   </div>
 
   <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-  <script src="data:text/javascript;base64,KCgpID0+IHsKICBjb25zdCBtZW51ID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignI21vYmlsZS1tZW51Jyk7CiAgY29uc3Qgb3BlbkJ1dHRvbiA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5tZW51LXRvZ2dsZScpOwogIGNvbnN0IGNsb3NlQnV0dG9uID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignLm1lbnUtY2xvc2UnKTsKICBjb25zdCBtZW51TGlua3MgPSBtZW51LnF1ZXJ5U2VsZWN0b3JBbGwoJ2FbaHJlZl49IiMiXScpOwogIGNvbnN0IHRvYXN0ID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignLnRvYXN0Jyk7CiAgbGV0IHRvYXN0VGltZXI7CgogIGZ1bmN0aW9uIHNldE1lbnUob3BlbikgewogICAgaWYgKG9wZW4pIHsKICAgICAgbWVudS5oaWRkZW4gPSBmYWxzZTsKICAgICAgZG9jdW1lbnQuYm9keS5jbGFzc0xpc3QuYWRkKCdtZW51LW9wZW4nKTsKICAgICAgb3BlbkJ1dHRvbi5zZXRBdHRyaWJ1dGUoJ2FyaWEtZXhwYW5kZWQnLCAndHJ1ZScpOwogICAgICBvcGVuQnV0dG9uLnNldEF0dHJpYnV0ZSgnYXJpYS1sYWJlbCcsICdGZWNoYXIgbWVudScpOwogICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoKCkgPT4gY2xvc2VCdXR0b24uZm9jdXMoKSk7CiAgICB9IGVsc2UgewogICAgICBtZW51LmhpZGRlbiA9IHRydWU7CiAgICAgIGRvY3VtZW50LmJvZHkuY2xhc3NMaXN0LnJlbW92ZSgnbWVudS1vcGVuJyk7CiAgICAgIG9wZW5CdXR0b24uc2V0QXR0cmlidXRlKCdhcmlhLWV4cGFuZGVkJywgJ2ZhbHNlJyk7CiAgICAgIG9wZW5CdXR0b24uc2V0QXR0cmlidXRlKCdhcmlhLWxhYmVsJywgJ0FicmlyIG1lbnUnKTsKICAgIH0KICB9CgogIG9wZW5CdXR0b24uYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoKSA9PiBzZXRNZW51KHRydWUpKTsKICBjbG9zZUJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsICgpID0+IHsKICAgIHNldE1lbnUoZmFsc2UpOwogICAgb3BlbkJ1dHRvbi5mb2N1cygpOwogIH0pOwoKICBtZW51TGlua3MuZm9yRWFjaCgobGluaykgPT4gewogICAgbGluay5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsICgpID0+IHNldE1lbnUoZmFsc2UpKTsKICB9KTsKCiAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigna2V5ZG93bicsIChldmVudCkgPT4gewogICAgaWYgKGV2ZW50LmtleSA9PT0gJ0VzY2FwZScgJiYgIW1lbnUuaGlkZGVuKSB7CiAgICAgIHNldE1lbnUoZmFsc2UpOwogICAgICBvcGVuQnV0dG9uLmZvY3VzKCk7CiAgICB9CiAgfSk7CgogIGZ1bmN0aW9uIHNob3dUb2FzdChtZXNzYWdlKSB7CiAgICBjbGVhclRpbWVvdXQodG9hc3RUaW1lcik7CiAgICB0b2FzdC50ZXh0Q29udGVudCA9IG1lc3NhZ2U7CiAgICB0b2FzdC5jbGFzc0xpc3QuYWRkKCdpcy12aXNpYmxlJyk7CiAgICB0b2FzdFRpbWVyID0gc2V0VGltZW91dCgoKSA9PiB0b2FzdC5jbGFzc0xpc3QucmVtb3ZlKCdpcy12aXNpYmxlJyksIDIyMDApOwogIH0KCiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnW2RhdGEtcGxhY2Vob2xkZXItbGlua10nKS5mb3JFYWNoKChsaW5rKSA9PiB7CiAgICBsaW5rLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgKGV2ZW50KSA9PiB7CiAgICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7CiAgICAgIHNob3dUb2FzdCgnUGxhY2Vob2xkZXIg4oCUIHN1YnN0aXR1YSBwZWxvIGxpbmsgZGVmaW5pdGl2by4nKTsKICAgIH0pOwogIH0pOwp9KSgpOwo="></script>
-<script>
-  const floatingMenu = document.querySelector(".floating-menu");
+  
+  <script>
+  const menu = document.querySelector("#mobile-menu");
+  const headerMenuButton = document.querySelector(".menu-toggle");
+  const floatingMenuButton = document.querySelector(".floating-menu");
+  const closeMenuButton = document.querySelector(".menu-close");
+  const menuLinks = menu.querySelectorAll('a[href^="#"]');
+  const toast = document.querySelector(".toast");
+
+  let toastTimer;
+  let buttonThatOpenedMenu = null;
+
+  function setMenu(open, triggerButton = null) {
+    if (open) {
+      buttonThatOpenedMenu = triggerButton;
+      menu.hidden = false;
+
+      document.body.classList.add("menu-open");
+
+      headerMenuButton.setAttribute("aria-expanded", "true");
+      floatingMenuButton.setAttribute("aria-expanded", "true");
+
+      requestAnimationFrame(() => {
+        closeMenuButton.focus();
+      });
+    } else {
+      menu.hidden = true;
+
+      document.body.classList.remove("menu-open");
+
+      headerMenuButton.setAttribute("aria-expanded", "false");
+      floatingMenuButton.setAttribute("aria-expanded", "false");
+
+      if (buttonThatOpenedMenu) {
+        buttonThatOpenedMenu.focus();
+      }
+
+      buttonThatOpenedMenu = null;
+    }
+  }
+
+  headerMenuButton.addEventListener("click", () => {
+    setMenu(true, headerMenuButton);
+  });
+
+  floatingMenuButton.addEventListener("click", () => {
+    setMenu(true, floatingMenuButton);
+  });
+
+  closeMenuButton.addEventListener("click", () => {
+    setMenu(false);
+  });
+
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      setMenu(false);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !menu.hidden) {
+      setMenu(false);
+    }
+  });
 
   function updateFloatingMenu() {
-    if (window.scrollY > 120) {
-      floatingMenu.classList.add("is-visible");
-    } else {
-      floatingMenu.classList.remove("is-visible");
-    }
+    const pageWasScrolled = window.scrollY > 120;
+    const menuIsClosed = menu.hidden;
+
+    floatingMenuButton.classList.toggle(
+      "is-visible",
+      pageWasScrolled && menuIsClosed
+    );
   }
 
   window.addEventListener("scroll", updateFloatingMenu, {
     passive: true
   });
+
+  function showToast(message) {
+    clearTimeout(toastTimer);
+
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 2200);
+  }
+
+  document
+    .querySelectorAll("[data-placeholder-link]")
+    .forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        showToast(
+          "Placeholder — substitua pelo link definitivo."
+        );
+      });
+    });
 
   updateFloatingMenu();
 </script>
