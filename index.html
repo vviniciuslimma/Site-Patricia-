@@ -416,25 +416,35 @@ main,
 
 .footer-nav {
   display: flex;
+  align-items: center;
   gap: 14px;
   font-size: 10px;
   line-height: 12px;
+  font-weight: 400;
+  color: rgba(243, 244, 246, 0.45);
 }
 
 .footer-nav a {
-  border-bottom: 1px solid var(--text);
+  border-bottom: none;
+  text-decoration: none;
+}
+
+
+.footer-nav a {
+  transition: color 180ms ease;
 }
 
 .footer-nav a:hover,
 .footer-nav a:focus-visible {
-  border-bottom-color: transparent;
+  color: rgba(243, 244, 246, 0.9);
 }
 
 .footer-bottom p {
   margin: 0;
   font-size: 10px;
   line-height: 12px;
-  opacity: .86;
+  font-weight: 400;
+  color: rgba(243, 244, 246, 0.45);
 }
 
 /* Mobile menu */
