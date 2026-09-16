@@ -344,6 +344,10 @@ main,
   transform: rotate(-1deg);
 }
 
+.handwritten--no-line {
+  border-bottom: none;
+}
+
 .footer-bottom {
   height: 160px;
   display: flex;
@@ -707,8 +711,10 @@ main,
   preload="auto"
   aria-hidden="true"
 >
-  <source src="assets/Grain_Site.mp4" type="video/mp4">
+  <source src="Grain_Site.mp4" type="video/mp4">
 </video>
+
+
 
   <header class="site-header" data-header>
     <a class="brand" href="#top" aria-label="Ir para o topo">
@@ -729,15 +735,14 @@ main,
 
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">ESPECIALISTA EM<br>NARRATIVAS AUDIOVISUAIS.</h1>
+      <h1 id="hero-title">ESPECIALISTA EM<br>NARRATIVAS AUDIOVISUAIS,</h1>
       <p>curiosa e apaixonada por arte, cinema &amp; design.</p>
     </section>
 
     <section class="reel" aria-label="Reel principal">
       <div class="reel-frame">
         <div class="reel-placeholder" role="img" aria-label="Placeholder do vídeo principal">
-          <span>REEL / VÍDEO PRINCIPAL</span>
-          <small>Substitua pelo arquivo final em assets/media</small>
+         
         </div>
       </div>
       <p class="manifesto" aria-label="Frase de destaque">“Eu quero me propor movimento, arte, vida e amor.”</p>
@@ -765,8 +770,11 @@ main,
       </div>
 
       <p class="signature" id="sobre">
-        <span>Patrícia 2L - Film Director,</span>
-        <span class="handwritten">Storyteller e Motion Designer</span>
+       <span>
+  Patrícia 2L - <span class="handwritten handwritten--no-line">Film Director,</span>
+</span>
+
+<span class="handwritten">Storyteller e Motion Designer</span>
       </p>
     </div>
 
