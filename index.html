@@ -453,13 +453,28 @@ body.menu-open .floating-menu {
   color: rgba(243, 244, 246, 0.45);
 }
 
-/* Mobile menu */
 .mobile-menu {
   position: fixed;
   inset: 0;
   z-index: 200;
   color: var(--text);
   background: var(--bg);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 700ms;
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transition-delay: 0s;
 }
 
 .mobile-menu[hidden] {
@@ -489,6 +504,13 @@ body.menu-open .floating-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  opacity: 0;
+  transform: translateY(-12px);
+
+  transition:
+    opacity 450ms ease,
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .menu-close {
@@ -507,6 +529,25 @@ body.menu-open .floating-menu {
   align-items: center;
   justify-content: center;
   gap: 68px;
+
+  opacity: 0;
+  transform: translateY(24px);
+
+  transition:
+    opacity 500ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-menu.is-open .mobile-menu__top {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 100ms;
+}
+
+.mobile-menu.is-open .mobile-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 160ms;
 }
 
 .mobile-primary,
@@ -968,34 +1009,52 @@ body.menu-open .floating-menu {
   let toastTimer;
   let buttonThatOpenedMenu = null;
 
-  function setMenu(open, triggerButton = null) {
-    if (open) {
-      buttonThatOpenedMenu = triggerButton;
-      menu.hidden = false;
+  const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
 
-      document.body.classList.add("menu-open");
+const MENU_TRANSITION_TIME = reducedMotion ? 0 : 700;
 
-      headerMenuButton.setAttribute("aria-expanded", "true");
-      floatingMenuButton.setAttribute("aria-expanded", "true");
+let menuTransitionTimer;
 
+function setMenu(open, triggerButton = null) {
+  clearTimeout(menuTransitionTimer);
+
+  if (open) {
+    buttonThatOpenedMenu = triggerButton;
+
+    menu.hidden = false;
+    document.body.classList.add("menu-open");
+
+    headerMenuButton.setAttribute("aria-expanded", "true");
+    floatingMenuButton.setAttribute("aria-expanded", "true");
+
+    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        menu.classList.add("is-open");
         closeMenuButton.focus();
       });
-    } else {
-      menu.hidden = true;
+    });
+  } else {
+    menu.classList.remove("is-open");
 
+    headerMenuButton.setAttribute("aria-expanded", "false");
+    floatingMenuButton.setAttribute("aria-expanded", "false");
+
+    menuTransitionTimer = setTimeout(() => {
+      menu.hidden = true;
       document.body.classList.remove("menu-open");
 
-      headerMenuButton.setAttribute("aria-expanded", "false");
-      floatingMenuButton.setAttribute("aria-expanded", "false");
+      updateFloatingMenu();
 
       if (buttonThatOpenedMenu) {
         buttonThatOpenedMenu.focus();
       }
 
       buttonThatOpenedMenu = null;
-    }
+    }, MENU_TRANSITION_TIME);
   }
+}
 
   headerMenuButton.addEventListener("click", () => {
     setMenu(true, headerMenuButton);
