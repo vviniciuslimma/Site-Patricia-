@@ -557,12 +557,26 @@ body.menu-open .floating-menu {
 }
 
 .mobile-primary {
-  font-size: 20px;
-  line-height: 1.1;
+  font-size: clamp(52px, 6vw, 96px);
+  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.045em;
 }
 
 .mobile-primary a {
-  padding: 2px 0;
+  width: max-content;
+  padding: 0;
+  color: var(--text);
+
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.mobile-primary a:hover,
+.mobile-primary a:focus-visible {
+  color: var(--orange);
+  transform: translateX(8px);
 }
 
 .mobile-social {
@@ -781,15 +795,30 @@ body.menu-open .floating-menu {
   .footer-bottom p {
     font-size: 8px;
   }
+
+  .mobile-menu__content {
+  gap: 28px;
+}
+
+.mobile-primary {
+  font-size: clamp(38px, 11vw, 56px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.mobile-social {
+  font-size: 12px;
+}
 }
 
 @media (max-width: 360px) {
   .mobile-menu__content {
-    gap: 36px;
+    gap: 20px;
   }
 
   .mobile-primary {
-    font-size: 18px;
+    font-size: 36px;
+    line-height: 1;
   }
 }
 
